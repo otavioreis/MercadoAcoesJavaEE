@@ -37,7 +37,7 @@ public class EmpresaServiceImpl implements EmpresaService{
 		Optional<Empresa> empresaOptional = empresaRepository.findById(id);
 
 		if (!empresaOptional.isPresent()) {
-			throw new IllegalArgumentException("Cliente não encontrado - id: " + id.toString());
+			throw new IllegalArgumentException("Empresa não encontrado - id: " + id.toString());
 		}
 
 		return empresaOptional.get();
@@ -53,7 +53,7 @@ public class EmpresaServiceImpl implements EmpresaService{
 			return empresaRepository.save(item);			
 		}
 		
-		throw new IllegalArgumentException("Cliente já existe no banco - id: " + empresa.getId());
+		throw new IllegalArgumentException("Empresa já existe no banco - id: " + empresa.getId());
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class EmpresaServiceImpl implements EmpresaService{
 		acoes.add(regAcao);
 		empresa.setAcoes(acoes);
 		Empresa empresaSaved = this.update(idEmpresa, empresa);
-		negociacaoService.criarVendaEmpresa(empresaSaved, acao);
+		negociacaoService.criarVendaEmpresa(empresaSaved.getId(), acao.getId());
 		
 		return empresaSaved;
 	}

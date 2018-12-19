@@ -13,9 +13,9 @@ import lombok.Setter;
 public class Message implements Serializable{
 
 	//VendaEmpresa
-	public Message(Empresa empresa, Acao acao) {
-		this.setEmpresa(empresa);
-		this.setAcao(acao);
+	public Message(String idEmpresa, String idAcao, String assinatura) {
+		this.setIdEmpresa(idEmpresa);
+		this.setIdAcao(idAcao);
 		this.setTipoNegociacao(TipoNegociacao.VendaEmpresa);
 	}
 	
@@ -39,10 +39,9 @@ public class Message implements Serializable{
 	
 	private String id;
 	private TipoNegociacao tipoNegociacao;
-	private Empresa empresa;
+	private String idEmpresa;
 	private String idCliente;
 	private String idNegociacao;
 	private String idAcao;
-	private Acao acao;
 	private float valor;
 }

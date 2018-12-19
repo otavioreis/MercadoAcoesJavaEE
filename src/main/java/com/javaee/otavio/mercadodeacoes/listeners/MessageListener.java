@@ -30,7 +30,7 @@ public class MessageListener {
 			break;
 			
 		case VendaEmpresa:
-			negociacaoService.processarVendaEmpresa(message.getEmpresa(), message.getAcao());
+			negociacaoService.processarVendaEmpresa(message.getIdEmpresa(), message.getIdAcao());
 
 		default:
 			logger.info("Tipo de negociação inválido.");

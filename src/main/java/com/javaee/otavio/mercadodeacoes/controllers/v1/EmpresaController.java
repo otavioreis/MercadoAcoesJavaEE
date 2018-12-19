@@ -59,7 +59,7 @@ public class EmpresaController {
 		empresaService.deleteById(id);
 	}
 	
-	@PostMapping({"/acao/{idEmpresa}"})
+	@PostMapping({"{idEmpresa}/acao"})
 	@ResponseStatus(HttpStatus.OK)
 	public Empresa createAcao(@PathVariable String idEmpresa, @RequestBody Acao acao) {
 		return empresaService.criarAcao(idEmpresa, acao);

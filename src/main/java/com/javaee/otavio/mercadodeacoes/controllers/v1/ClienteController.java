@@ -47,7 +47,7 @@ public class ClienteController {
 		public Cliente update(@PathVariable String id, @RequestBody Cliente cliente) {
 			Cliente clienteReg = clienteService.findById(id);
 			clienteReg.setNome(cliente.getNome());
-			clienteReg.setEmail(cliente.getNome());
+			clienteReg.setEmail(cliente.getEmail());
 			return clienteService.update(id, clienteReg);
 		}
 		

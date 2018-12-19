@@ -27,6 +27,9 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 	private NegociacaoRepository negociacaoRepository;
 	
 	@Autowired
+	private EmpresaService empresaService;
+	
+	@Autowired
 	private ClienteService clienteService;
 	
 	@Autowired
@@ -65,9 +68,17 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 	public void deleteById(String id) {
 		negociacaoRepository.deleteById(id);
 	}
+	
+	@Override
+	public Negociacao update(String id, Negociacao item) {
+		throw new IllegalArgumentException("Não é possível atualizar uma negociação");
+	}
 
 	@Override
-	public Negociacao processarVendaEmpresa(Empresa empresa, Acao acao) {
+	public Negociacao processarVendaEmpresa(String idEmpresa, String idAcao) {
+		Empresa empresa = empresaService.findById(idEmpresa);
+		Acao acao = acaoService.findById(idAcao);
+		
 		Negociacao negociacao = new Negociacao();
 		negociacao.setEmpresaVendedora(empresa);
 		negociacao.setAcao(acao);
@@ -171,9 +182,10 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 		sb.append("Valor: " + negociacao.getEmpresaVendedora() != null ? negociacao.getAcao().getValorInicial() : negociacao.getAcao().getValorAtual());
 		sb.append("---------------------------------------------");
 
-		Acao acao = negociacao.getAcao();
-		acao.setCliente(cliente);
-		acaoService.update(acao.getId(), acao);
+		//Acao acao = negociacao.getAcao();
+		//acao.setCliente(cliente);
+		//acaoService.update(acao.getId(), acao);
+		
 		
 		emailsender.SendEmail(cliente.getEmail(), "Registro de venda de cliente", sb.toString());
 		
@@ -181,8 +193,8 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 	}
 
 	@Override
-	public String criarVendaEmpresa(Empresa empresa, Acao acao) {
-		Message message = new Message(empresa, acao);
+	public String criarVendaEmpresa(String idEmpresa, String idAcao) {
+		Message message = new Message(idEmpresa, idAcao, "assinatura");
 		this.SendMessage(message);
 		return "mensagem enviada - Criar Venda Empresa";
 	}
@@ -204,5 +216,4 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 	private void SendMessage(Message message) {
 		this.rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_MESSAGES, message);
 	}
-
 }
