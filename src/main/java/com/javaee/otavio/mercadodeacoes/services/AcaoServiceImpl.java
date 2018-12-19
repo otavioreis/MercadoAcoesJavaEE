@@ -1,5 +1,6 @@
 package com.javaee.otavio.mercadodeacoes.services;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -40,6 +41,7 @@ public class AcaoServiceImpl implements AcaoService{
 		try {
 			acao = acaoRepository.findByNome(item.getNome()).get(0);
 		} catch (Exception e) {
+			item.setDataCriacao(LocalDateTime.now());
 			return acaoRepository.save(item);			
 		}
 		
@@ -47,7 +49,8 @@ public class AcaoServiceImpl implements AcaoService{
 	}
 
 	@Override
-	public Acao save(Acao item) {
+	public Acao update(String id, Acao item) {
+		item.setId(id);
 		return acaoRepository.save(item);
 	}
 

@@ -1,5 +1,6 @@
 package com.javaee.otavio.mercadodeacoes.services;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -48,6 +49,7 @@ public class EmpresaServiceImpl implements EmpresaService{
 		try {
 			empresa = empresaRepository.findByNome(item.getNome()).get(0);
 		} catch (Exception e) {
+			item.setDataCriacao(LocalDateTime.now());
 			return empresaRepository.save(item);			
 		}
 		
@@ -55,7 +57,8 @@ public class EmpresaServiceImpl implements EmpresaService{
 	}
 
 	@Override
-	public Empresa save(Empresa item) {
+	public Empresa update(String id, Empresa item) {
+		item.setId(id);
 		return empresaRepository.save(item);
 	}
 
@@ -65,15 +68,15 @@ public class EmpresaServiceImpl implements EmpresaService{
 	}
 
 	@Override
-	public Empresa CriarAcao(String idEmpresa, Acao acao) {
+	public Empresa criarAcao(String idEmpresa, Acao acao) {
 		Acao regAcao = acaoService.createNew(acao);
 		
 		Empresa empresa = this.findById(idEmpresa);
 		Set<Acao> acoes = empresa.getAcoes();
 		acoes.add(regAcao);
 		empresa.setAcoes(acoes);
-		Empresa empresaSaved = this.save(empresa);
-		negociacaoService.CriarVendaEmpresa(empresaSaved, acao);
+		Empresa empresaSaved = this.update(idEmpresa, empresa);
+		negociacaoService.criarVendaEmpresa(empresaSaved, acao);
 		
 		return empresaSaved;
 	}

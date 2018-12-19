@@ -1,5 +1,8 @@
 package com.javaee.otavio.mercadodeacoes.emailsender;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class EmailSender {
 	public void SendEmail(String toEmail, String subject, String body) {
 		final String fromEmail = "otavioareis@gmail.com";

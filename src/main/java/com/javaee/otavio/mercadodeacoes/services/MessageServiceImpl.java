@@ -40,7 +40,8 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	@Override
-	public Message save(Message item) {
+	public Message update(String id, Message item) {
+		item.setId(id);
 		return messageRepository.save(item);
 	}
 

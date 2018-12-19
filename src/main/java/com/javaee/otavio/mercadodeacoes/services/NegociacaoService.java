@@ -5,10 +5,10 @@ import com.javaee.otavio.mercadodeacoes.domain.Empresa;
 import com.javaee.otavio.mercadodeacoes.domain.Negociacao;
 
 public interface NegociacaoService extends Crud<Negociacao>{
-	Negociacao ProcessarVendaEmpresa(Empresa empresa, Acao acao);
-	Negociacao ProcessarVendaCliente(String idCliente, String idAcao, float valor);
-	Negociacao ProcessarCompraCliente(String idCliente, String idNegociacao);
-	String CriarVendaEmpresa(Empresa empresa, Acao acao);
-	String CriarVendaCliente(String idCliente, String idAcao, float valor);
-	String CriarCompraCliente(String idCliente, String idNegociacao);
+	Negociacao processarVendaEmpresa(Empresa empresa, Acao acao);
+	Negociacao processarVendaCliente(String idCliente, String idAcao, float valor);
+	Negociacao processarCompraCliente(String idCliente, String idNegociacao);
+	String criarVendaEmpresa(Empresa empresa, Acao acao);
+	String criarVendaCliente(String idCliente, String idAcao, float valor);
+	String criarCompraCliente(String idCliente, String idNegociacao);
 }

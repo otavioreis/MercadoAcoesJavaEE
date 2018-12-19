@@ -48,7 +48,7 @@ public class ClienteController {
 			Cliente clienteReg = clienteService.findById(id);
 			clienteReg.setNome(cliente.getNome());
 			clienteReg.setEmail(cliente.getNome());
-			return clienteService.save(clienteReg);
+			return clienteService.update(id, clienteReg);
 		}
 		
 		@DeleteMapping({"/{id}"})

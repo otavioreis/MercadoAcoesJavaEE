@@ -37,6 +37,7 @@ public class Message implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	private String id;
 	private TipoNegociacao tipoNegociacao;
 	private Empresa empresa;
 	private String idCliente;

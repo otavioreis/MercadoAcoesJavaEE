@@ -62,17 +62,12 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 	}
 
 	@Override
-	public Negociacao save(Negociacao item) {
-		return negociacaoRepository.save(item);
-	}
-
-	@Override
 	public void deleteById(String id) {
 		negociacaoRepository.deleteById(id);
 	}
 
 	@Override
-	public Negociacao ProcessarVendaEmpresa(Empresa empresa, Acao acao) {
+	public Negociacao processarVendaEmpresa(Empresa empresa, Acao acao) {
 		Negociacao negociacao = new Negociacao();
 		negociacao.setEmpresaVendedora(empresa);
 		negociacao.setAcao(acao);
@@ -97,7 +92,7 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 	}
 
 	@Override
-	public Negociacao ProcessarVendaCliente(String idCliente, String idAcao, float valor) {
+	public Negociacao processarVendaCliente(String idCliente, String idAcao, float valor) {
 		Cliente cliente = clienteService.findById(idCliente);
 		Acao acao = acaoService.findById(idAcao);
 		
@@ -121,7 +116,7 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 		sb.append("Caso alguém compre a sua ação, você será notificado novamente.");
 
 		acao.setValorAtual(valor);
-		acaoService.save(acao);
+		acaoService.update(idAcao, acao);
 		
 		emailsender.SendEmail(cliente.getEmail(), "Registro de venda de cliente", sb.toString());
 		
@@ -130,13 +125,13 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 	}
 
 	@Override
-	public Negociacao ProcessarCompraCliente(String idCliente, String idNegociacao) {
+	public Negociacao processarCompraCliente(String idCliente, String idNegociacao) {
 		Cliente cliente = clienteService.findById(idCliente);
 		Negociacao negociacao = this.findById(idNegociacao);
 		
 		negociacao.setDataNegociacao(LocalDateTime.now());
 		negociacao.setClienteComprador(cliente);
-		negociacao = this.save(negociacao);
+		negociacao = this.createNew(negociacao);
 		
 		//Email para o vendedor
 		if(negociacao.getEmpresaVendedora() != null) {
@@ -178,7 +173,7 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 
 		Acao acao = negociacao.getAcao();
 		acao.setCliente(cliente);
-		acaoService.save(acao);
+		acaoService.update(acao.getId(), acao);
 		
 		emailsender.SendEmail(cliente.getEmail(), "Registro de venda de cliente", sb.toString());
 		
@@ -186,21 +181,21 @@ public class NegociacaoServiceImpl implements NegociacaoService {
 	}
 
 	@Override
-	public String CriarVendaEmpresa(Empresa empresa, Acao acao) {
+	public String criarVendaEmpresa(Empresa empresa, Acao acao) {
 		Message message = new Message(empresa, acao);
 		this.SendMessage(message);
 		return "mensagem enviada - Criar Venda Empresa";
 	}
 
 	@Override
-	public String CriarVendaCliente(String idCliente, String idAcao, float valor) {
+	public String criarVendaCliente(String idCliente, String idAcao, float valor) {
 		Message message = new Message(idCliente, idAcao, valor);
 		this.SendMessage(message);
 		return "mensagem enviada - Criar Venda Cliente";
 	}
 
 	@Override
-	public String CriarCompraCliente(String idCliente, String idNegociacao) {
+	public String criarCompraCliente(String idCliente, String idNegociacao) {
 		Message message = new Message(idCliente, idNegociacao);
 		this.SendMessage(message);
 		return "mensagem enviada - Criar Compra Cliente";

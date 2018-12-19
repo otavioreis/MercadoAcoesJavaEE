@@ -1,5 +1,6 @@
 package com.javaee.otavio.mercadodeacoes.services;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -40,6 +41,7 @@ public class ClienteServiceImpl implements ClienteService{
 		try {
 			cliente = clienteRepository.findByNome(item.getNome()).get(0);
 		} catch (Exception e) {
+			item.setDataCriacao(LocalDateTime.now());
 			return clienteRepository.save(item);			
 		}
 		
@@ -47,7 +49,8 @@ public class ClienteServiceImpl implements ClienteService{
 	}
 
 	@Override
-	public Cliente save(Cliente item) {
+	public Cliente update(String id, Cliente item) {
+		item.setId(id);
 		return clienteRepository.save(item);
 	}
 

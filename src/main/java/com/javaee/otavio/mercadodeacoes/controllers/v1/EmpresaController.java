@@ -50,7 +50,7 @@ public class EmpresaController {
 		Empresa empresaReg = empresaService.findById(id);
 		empresaReg.setNome(empresa.getNome());
 		empresaReg.setEmail(empresa.getNome());
-		return empresaService.save(empresaReg);
+		return empresaService.update(id, empresaReg);
 	}
 	
 	@DeleteMapping({"/{id}"})
@@ -62,7 +62,7 @@ public class EmpresaController {
 	@PostMapping({"/acao/{idEmpresa}"})
 	@ResponseStatus(HttpStatus.OK)
 	public Empresa createAcao(@PathVariable String idEmpresa, @RequestBody Acao acao) {
-		return empresaService.CriarAcao(idEmpresa, acao);
+		return empresaService.criarAcao(idEmpresa, acao);
 	}
 	
 }

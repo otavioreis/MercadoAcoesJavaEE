@@ -37,13 +37,13 @@ public class NegociacaoController {
 	@PostMapping({"/cliente/{idCliente}/negociacao/{idNegociacao}"})
 	@ResponseStatus(HttpStatus.OK)
 	public String criarCompraCliente(@PathVariable String idCliente, @PathVariable String idNegociacao) {
-		return negociacaoService.CriarCompraCliente(idCliente, idNegociacao);
+		return negociacaoService.criarCompraCliente(idCliente, idNegociacao);
 	}
 	
 	@PostMapping({"/cliente/{idCliente}/acao/{idAcao}/valor/{valor}"})
 	@ResponseStatus(HttpStatus.OK)
 	public String criarVendaCliente(@PathVariable String idCliente, @PathVariable String idAcao, @PathVariable float valor) {
-		return negociacaoService.CriarVendaCliente(idCliente, idAcao, valor);
+		return negociacaoService.criarVendaCliente(idCliente, idAcao, valor);
 	}
 
 }

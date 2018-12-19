@@ -22,15 +22,15 @@ public class MessageListener {
 		
 		switch (message.getTipoNegociacao()) {
 		case CompraCliente:
-			negociacaoService.ProcessarCompraCliente(message.getIdCliente(), message.getIdNegociacao());
+			negociacaoService.processarCompraCliente(message.getIdCliente(), message.getIdNegociacao());
 			break;
 
 		case VendaCliente:
-			negociacaoService.ProcessarVendaCliente(message.getIdCliente(), message.getIdAcao(), message.getValor());
+			negociacaoService.processarVendaCliente(message.getIdCliente(), message.getIdAcao(), message.getValor());
 			break;
 			
 		case VendaEmpresa:
-			negociacaoService.ProcessarVendaEmpresa(message.getEmpresa(), message.getAcao());
+			negociacaoService.processarVendaEmpresa(message.getEmpresa(), message.getAcao());
 
 		default:
 			logger.info("Tipo de negociação inválido.");
